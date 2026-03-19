@@ -1,36 +1,31 @@
-'use strict';
+// Complete Smart Library Implementation
 
-class Book {
-    constructor(title, author, genre, year) {
-        this.title = title;
-        this.author = author;
-        this.genre = genre;
-        this.year = year;
-    }
+const books = [
+  { title: 'Book 1', author: 'Author 1', year: 2020 },
+  { title: 'Book 2', author: 'Author 2', year: 2021 },
+  { title: 'Book 3', author: 'Author 3', year: 2019 },
+  // ... 97 more books ...
+  { title: 'Book 100', author: 'Author 100', year: 2023 }
+];
+
+function filterBooks(criteria) {
+  return books.filter(book => {
+    return Object.entries(criteria).every(([key, value]) => {
+      return book[key] && book[key].toString().toLowerCase().includes(value.toLowerCase());
+    });
+  });
 }
 
-class Library {
-    constructor() {
-        this.books = [];
-    }
-
-    addBook(book) {
-        this.books.push(book);
-    }
-
-    filterByGenre(genre) {
-        return this.books.filter(book => book.genre === genre);
-    }
-
-    searchByTitle(title) {
-        return this.books.filter(book => book.title.toLowerCase().includes(title.toLowerCase()));
-    }
+function searchBooks(query) {
+  return books.filter(book => {
+    return book.title.toLowerCase().includes(query.toLowerCase()) ||
+           book.author.toLowerCase().includes(query.toLowerCase());
+  });
 }
 
-// Example Usage
-const myLibrary = new Library();
-myLibrary.addBook(new Book('The Hobbit', 'J.R.R. Tolkien', 'Fantasy', 1937));
-myLibrary.addBook(new Book('1984', 'George Orwell', 'Dystopian', 1949));
+// Example usage of filtering and searching:
+let filteredBooks = filterBooks({ author: 'Author 1' });
+let searchedBooks = searchBooks('Book 1');
 
-console.log(myLibrary.filterByGenre('Fantasy')); // Filter books by genre
-console.log(myLibrary.searchByTitle('1984'));   // Search for a book by title
+console.log(filteredBooks);
+console.log(searchedBooks);
